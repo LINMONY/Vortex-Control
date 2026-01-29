@@ -1,0 +1,149 @@
+/* Global Styles - Deep Nebula Theme */
+QMainWindow {
+    background-color: transparent; /* Translucent for custom gradient in central widget */
+}
+
+/* Central Widget Gradient Background */
+QWidget#centralWidget {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                                      stop:0 #0f172a, stop:1 #1e1b4b);
+    border-radius: 12px;
+    border: 1px solid #2e3c54;
+}
+
+QWidget {
+    font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: #cbd5e1; /* Slate-300 */
+}
+
+/* Custom Title Bar */
+QFrame#titleBar {
+    background-color: transparent;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+QPushButton#titleBarBtn {
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+}
+QPushButton#titleBarBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+QPushButton#titleBarBtnClose:hover {
+    background-color: #ef4444; /* Red-500 */
+}
+
+/* Sidebar */
+QFrame#sidebar {
+    background-color: rgba(30, 41, 59, 0.5); /* Slate-800 with 50% opacity */
+    border-right: 1px solid rgba(148, 163, 184, 0.1);
+    border-bottom-left-radius: 12px;
+}
+
+/* Sidebar Buttons */
+QPushButton#sidebarButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+    margin: 5px;
+    padding: 10px;
+}
+
+QPushButton#sidebarButton:hover {
+    background-color: rgba(148, 163, 184, 0.1);
+}
+
+QPushButton#sidebarButton:checked {
+    background-color: rgba(129, 140, 248, 0.2); /* Indigo-400 with 20% opacity */
+    border-left: 3px solid #818cf8;
+    color: #ffffff;
+}
+
+/* Top Tabs (Tweaks Page) */
+QPushButton#tabButton {
+    background-color: transparent;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+QPushButton#tabButton:hover {
+    color: #e2e8f0;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+QPushButton#tabButton:checked {
+    color: #818cf8; /* Indigo-400 */
+    background-color: rgba(129, 140, 248, 0.1);
+}
+
+/* ScrollBar */
+QScrollBar:vertical {
+    border: none;
+    background: transparent;
+    width: 8px;
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:vertical {
+    background: #475569;
+    min-height: 20px;
+    border-radius: 4px;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* Cards (Dashboard) */
+#card {
+    background-color: rgba(30, 41, 59, 0.4);
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+#card:hover {
+    background-color: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(129, 140, 248, 0.5); /* Indigo glow */
+}
+
+/* Info Panels */
+QFrame#infoPanel {
+    background-color: rgba(30, 41, 59, 0.4);
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* Toggles (Checkboxes) */
+QCheckBox {
+    spacing: 12px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+QCheckBox::indicator {
+    width: 48px;
+    height: 26px;
+    border-radius: 13px;
+    background-color: #334155;
+    border: 1px solid #475569;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #4f46e5; /* Indigo-600 */
+    border: 1px solid #818cf8;
+    image: none;
+}
+
+/* Circle in Toggle (simulated by generic stylesheet trickery usually needed complex painter, for now simple style) */
+/* Ideally we use a custom painted widget for smooth toggle, but simple indicator style: */
+QCheckBox::indicator:checked:hover {
+    background-color: #4338ca;
+}
