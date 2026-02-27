@@ -303,7 +303,11 @@ class SettingsPage(QWidget):
                                 self)
         if dlg.exec():
             # Restoration logic would go here
-            VortexMessageDialog(_.get("restore"), "Функция восстановления находится в разработке.", parent=self).exec()
+            import subprocess
+            try:
+                subprocess.Popen(["rstrui.exe"])
+            except Exception as e:
+                VortexMessageDialog(_.get("error"), f"Не удалось запустить утилиту восстановления: {e}", parent=self).exec()
 
     def request_create_point(self):
         dlg = VortexCreationDialog(self)

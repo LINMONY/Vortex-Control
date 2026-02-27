@@ -60,6 +60,21 @@ class I18n:
         "confirm": "Подтверждение",
         "are_you_sure": "Вы уверены?",
         "action_irreversible": "Это действие может быть необратимым.",
+        
+        # Dialog Strings
+        "confirm_apply_title": "Подтверждение применения",
+        "confirm_apply_text": "Выбрано изменений",
+        "confirm_apply_warn": "Это изменит системные настройки Windows. Некорректные твики могут повлиять на работу системы.",
+        "recommend_restore_point": "Рекомендуется создать точку восстановления вручную или автоматически.",
+        "create_and_apply": "Создать точку и применить (Рекомендуется)",
+        "apply_without_point": "Применить без точки восстановления",
+        "cancel": "Отмена",
+        
+        "applying_changes": "Применение изменений...",
+        "close": "Закрыть",
+        "success_finished": "Успешно завершено!",
+        "finished_errors": "Завершено с ошибками",
+        "aborting_operation": "Прерывание операции...",
     }
     
     @classmethod

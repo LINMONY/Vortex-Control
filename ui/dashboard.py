@@ -1,11 +1,26 @@
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame, 
                                QPushButton, QSizePolicy, QMessageBox, QProgressDialog)
-from PySide6.QtCore import Qt, QSize, QTimer
+from PySide6.QtCore import Qt, QSize, QTimer, QThread, Signal
 from PySide6.QtGui import QIcon
 from utils.paths import get_assets_dir
 from core.tweaks_registry import registry
 from core.logger import logger
 from core.i18n import I18n as _
+
+class DashboardOptimizationThread(QThread):
+    finished_optimizing = Signal(int)
+    error = Signal(str)
+
+    def __init__(self, recommended_ids, parent=None):
+        super().__init__(parent)
+        self.recommended_ids = recommended_ids
+
+    def run(self):
+        try:
+            count = registry.apply_batch(self.recommended_ids)
+            self.finished_optimizing.emit(count)
+        except Exception as e:
+            self.error.emit(str(e))
 
 class Dashboard(QWidget):
     def __init__(self):
@@ -177,21 +192,31 @@ class Dashboard(QWidget):
                 recommended_ids = ["disable_paging_exec", "large_system_cache", "power_plan"] 
                 
                 # Show progress
-                progress = QProgressDialog("Применение настроек...", "Отмена", 0, 100, self)
+                progress = QProgressDialog("Применение настроек...", "Отмена", 0, 0, self)
                 progress.setWindowModality(Qt.WindowModal)
                 progress.setMinimumDuration(0)
-                progress.setValue(10)
                 
-                # Apply
-                count = registry.apply_batch(recommended_ids)
+                self.opt_thread = DashboardOptimizationThread(recommended_ids, self)
                 
-                progress.setValue(100)
+                def on_finished(count):
+                    progress.accept()
+                    QMessageBox.information(
+                        self, 
+                        _.get("success"), 
+                        f"Успешно применено твиков: {count}\nСистема оптимизирована!"
+                    )
                 
-                QMessageBox.information(
-                    self, 
-                    _.get("success"), 
-                    f"Успешно применено твиков: {count}\nСистема оптимизирована!"
-                )
+                def on_error(err):
+                    progress.accept()
+                    QMessageBox.warning(self, _.get("error"), f"Ошибка при применении: {err}")
+                
+                self.opt_thread.finished_optimizing.connect(on_finished)
+                self.opt_thread.error.connect(on_error)
+                
+                progress.canceled.connect(self.opt_thread.terminate) # Optional: basic cancellation
+                
+                self.opt_thread.start()
+                progress.exec()
             
             # Verify and run calls the safety manager (creating restore point if needed)
             mw.safety.verify_and_run(run_optimization)
